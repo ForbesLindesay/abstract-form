@@ -1,0 +1,45 @@
+{
+  "name": "abstract-form",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "description": "Abstract form components for React",
+  "keywords": [],
+  "files": [
+    "lib/"
+  ],
+  "dependencies": {
+    "babel-runtime": "^6.18.0",
+    "shallowequal": "^0.2.2"
+  },
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-jest": "*",
+    "babel-preset-forbeslindesay": "*",
+    "babelify": "^7.3.0",
+    "browserify-middleware": "^7.1.0",
+    "dehumanize-date": "^2.3.2",
+    "eslint": "*",
+    "eslint-config-forbeslindesay": "*",
+    "express": "^4.14.0",
+    "jest": "*",
+    "occasion": "^1.0.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "babel src --out-dir lib",
+    "lint": "eslint src",
+    "test": "jest ./src/** --coverage && npm run lint",
+    "watch": "jest ./src/** --coverage --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ForbesLindesay/abstract-form.git"
+  },
+  "author": {
+    "name": "Forbes Lindesay",
+    "url": "http://github.com/ForbesLindesay"
+  },
+  "license": "MIT"
+}
