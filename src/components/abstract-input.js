@@ -6,9 +6,22 @@ import {getInput} from '../registry';
 function getFieldConfig(props) {
   const {type, name, required, onValidate} = props;
   const Component = getInput(type);
+  let initialValue = (
+    props.initialValue !== undefined
+    ? props.initialValue
+    : (
+      Component.getInitialValue
+      ? Component.getInitialValue()
+      : undefined
+    )
+  );
+  if (Component.normalize && initialValue != null && initialValue !== '') {
+    initialValue = Component.normalize(initialValue, {props});
+  }
   return {
     Component,
     props,
+    initialValue,
   };
 }
 function ignoreFunctions(a, b) {
@@ -28,16 +41,6 @@ class AbstractInput extends Component {
     super(props, context);
     this._fieldConfig = getFieldConfig(this._proxyMethods(props));
     this.context.abstractFormState.setConfig(this.props.name, this._fieldConfig);
-    this.context.abstractFormState.setFieldValue(
-      this.props.name,
-      this.props.initialValue !== undefined
-      ? this.props.initialValue
-      : (
-        this._fieldConfig.Component.getInitialValue
-        ? this._fieldConfig.Component.getInitialValue()
-        : undefined
-      )
-    );
     this.state = this._calculateState();
   }
   componentDidMount() {

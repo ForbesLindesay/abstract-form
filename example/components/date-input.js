@@ -30,7 +30,15 @@ class DateInput extends Component {
     const {type, value, error, ...props} = this.props;
     let formatedValue = value;
     if (/^\d\d\d\d\-\d\d\-\d\d$/.test(value)) {
-      formatedValue = formatDate(value, this.props.format);
+      if (value === parseDate('today')) {
+        formatedValue = 'today';
+      } else if (value === parseDate('tomorrow')) {
+        formatedValue = 'tomorrow';
+      } else if (value === parseDate('yesterday')) {
+        formatedValue = 'yesterday';
+      } else {
+        formatedValue = formatDate(value, this.props.format);
+      }
     } else if (!value) {
       formatedValue = '';
     }

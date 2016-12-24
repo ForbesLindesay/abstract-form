@@ -17,10 +17,11 @@ function maxLength(n) {
   };
 }
 function NewEntry({data, isValid}) {
+  // if you want to allow nesting another form inside the first form, use the `<Form />` style like this
   return (
     <div>
-      <Form/>
-      Date: <Input type="date" name="entryDate" required />
+      <Form />
+      Date: <Input type="date" name="entryDate" required initialValue="today" />
       value: <Input type="integer" name="entryValue" required />
       Message: <Input type="text" name="entryMessage" required validate={maxLength(100)} />
       <SubmitButton disabled={!isValid}>Create Entry</SubmitButton>
@@ -33,9 +34,11 @@ const NewEntryContainer = createFormContainer(NewEntry);
 class Example extends Component {
   state = {entries: []};
   _onSubmitNewEntry = (newEntry) => {
-    this.setState(({entries}) => ({
-      entries: entries.concat(newEntry),
-    }));
+    return new Promise((resolve, reject) => { setTimeout(resolve, 1000); }).then(() => {
+      this.setState(({entries}) => ({
+        entries: entries.concat(newEntry),
+      }));
+    });
   };
   _onChangeDate = (date) => {
     this.setState({date});
@@ -43,7 +46,7 @@ class Example extends Component {
   render() {
     return (
       <div>
-        <NewEntryContainer key={this.state.entries.length} onSubmit={this._onSubmitNewEntry} />
+        <NewEntryContainer onSubmit={this._onSubmitNewEntry} />
         <table>
           <thead>
             <tr>

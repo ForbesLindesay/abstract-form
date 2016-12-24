@@ -74,7 +74,17 @@ function createFormContainer(Form) {
           ...oldState.config,
           [name]: config,
         },
-        data: oldState.data,
+        data: {
+          ...oldState.data,
+          [name]: (
+            // there is no old config or the old data === the old config's initial value
+            !oldState.config[name] || oldState.data[name] === oldState.config[name].initialValue
+            // update to the new initialValue
+            ? config.initialValue
+            // leave the old value
+            : oldState.data[name]
+          ),
+        },
       };
       newState.validation = validate(newState);
       this._context.setValue(newState);
@@ -115,10 +125,17 @@ function createFormContainer(Form) {
           result.then(
             () => {
               const oldState = this._context.getValue();
-              this._context.setValue({
-                ...oldState,
-                submitting: false,
+              const newData = {};
+              Object.keys(oldState.config).forEach(key => {
+                newData[key] = oldState.config[key].initialValue;
               });
+              const newState = {
+                ...oldState,
+                data: newData,
+                submitting: false,
+              };
+              newState.validation = validate(newState);
+              this._context.setValue(newState);
             },
             () => {
               const oldState = this._context.getValue();
