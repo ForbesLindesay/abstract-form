@@ -1,5 +1,7 @@
 # abstract-form
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ForbesLindesay/abstract-form.svg)](https://greenkeeper.io/)
+
 Abstract form components for React
 
 [![Build Status](https://img.shields.io/travis/ForbesLindesay/abstract-form/master.svg)](https://travis-ci.org/ForbesLindesay/abstract-form)
